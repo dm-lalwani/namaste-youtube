@@ -13,12 +13,12 @@ const VideoContainer = () => {
     const response = await fetch(YOUTUBE_VIDEOS_API);
     const data = await response.json();
     setVideos(data.items);
-  }
+  };
   return (
     <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] mt-8">
       {videos.map((video) => (
-        <Link to={"/watch?v=" + video.id}>
-          <VideoCard key={video.id} info={video} />
+        <Link key={video.id} to={"/watch?v=" + video.id}>
+          <VideoCard info={video} />
         </Link>
       ))}
     </div>
