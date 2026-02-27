@@ -6,10 +6,11 @@ import {
   FaBell,
   FaUserCircle,
 } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../redux/appSlice";
 import { useEffect, useRef, useState } from "react";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import { cacheResults } from "../redux/searchSlice";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,6 +18,7 @@ const Header = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const dispatch = useDispatch();
   const wrapperRef = useRef(null);
+  const cacheSearch = useSelector((store) => store.search);
 
   const handleToggleSidebar = () => {
     dispatch(toggleMenu());
@@ -30,7 +32,13 @@ const Header = () => {
     }
 
     const timer = setTimeout(() => {
-      getSearchSuggestions(searchQuery);
+      if(cacheSearch[searchQuery]) {
+        setSuggestions(cacheSearch[searchQuery]);
+        setShowSuggestions(true);
+        return;
+      } else {
+        getSearchSuggestions(searchQuery);
+      }
     }, 300);
 
     return () => clearTimeout(timer);
@@ -46,6 +54,11 @@ const Header = () => {
       const data = await response.json();
       setSuggestions(data[1] || []);
       setShowSuggestions(true);
+      dispatch(
+        cacheResults({
+          [searchQuery]: data[1],
+        }),
+      );
     } catch (err) {
       console.error("Suggestion error", err);
     }
