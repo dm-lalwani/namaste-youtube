@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { closeMenu } from "../redux/appSlice";
 import { useSearchParams } from "react-router-dom";
+import CommentsContainer from "./CommentsContainer";
 
 const Watch = () => {
   const dispatch = useDispatch();
@@ -89,6 +90,7 @@ const Watch = () => {
           <div className="h-24 bg-gray-100 rounded-lg" />
         </aside>
       </div>
+      <CommentsContainer />
     </div>
   );
 };

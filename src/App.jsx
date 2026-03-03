@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./components/AppLayout.jsx";
+import SearchResults from "./components/SearchResults.jsx";
 
 const Home = lazy(() => import("./components/Home.jsx"));
 const Watch = lazy(() => import("./components/Watch.jsx"));
@@ -12,6 +13,7 @@ const appRouter = createBrowserRouter([
     children: [
       { path: "", element: <Home /> }, // matches "/"
       { path: "watch", element: <Watch /> }, // matches "/watch"
+      { path: "results", element: <SearchResults /> }, // /results?search_query=...
     ],
   },
 ]);

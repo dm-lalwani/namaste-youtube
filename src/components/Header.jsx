@@ -11,6 +11,7 @@ import { toggleMenu } from "../redux/appSlice";
 import { useEffect, useRef, useState } from "react";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 import { cacheResults } from "../redux/searchSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,6 +20,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const wrapperRef = useRef(null);
   const cacheSearch = useSelector((store) => store.search);
+  const navigate = useNavigate();
+
 
   const handleToggleSidebar = () => {
     dispatch(toggleMenu());
@@ -79,14 +82,19 @@ const Header = () => {
     e.preventDefault();
     setShowSuggestions(false);
     if (!searchQuery.trim()) return;
-    // navigate to results or do something with searchQuery
+
+    navigate(`/results?search_query=${encodeURIComponent(searchQuery.trim())}`);
   };
 
+
   const handleSuggestionClick = (s) => {
-    setSearchQuery(s);
     setShowSuggestions(false);
-    // trigger search navigation if you want
+    setSearchQuery(s);
+    setTimeout(() => {
+      navigate(`/results?search_query=${encodeURIComponent(s)}`);
+    }, 0);
   };
+
 
   return (
     <header className="flex items-center justify-between px-4 md:px-6 py-2 bg-white shadow fixed left-0 top-0 w-full z-50">
@@ -140,11 +148,7 @@ const Header = () => {
                 <li
                   key={s}
                   className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                  onMouseDown={(e) => {
-                    // prevent blur on input before click handler
-                    e.preventDefault();
-                    handleSuggestionClick(s);
-                  }}
+                  onClick={() => handleSuggestionClick(s)}
                 >
                   <FaSearch className="text-gray-500 text-xs" />
                   <span className="truncate">{s}</span>
