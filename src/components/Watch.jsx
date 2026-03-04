@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { closeMenu } from "../redux/appSlice";
 import { useSearchParams } from "react-router-dom";
 import CommentsContainer from "./CommentsContainer";
+import LiveChat from "./LiveChat";
 
 const Watch = () => {
   const dispatch = useDispatch();
@@ -84,10 +85,7 @@ const Watch = () => {
         {/* Right: suggested videos column */}
         <aside className="w-full lg:w-104 shrink-0 space-y-3">
           {/* Map your real suggested video cards here */}
-          <div className="h-24 bg-gray-100 rounded-lg" />
-          <div className="h-24 bg-gray-100 rounded-lg" />
-          <div className="h-24 bg-gray-100 rounded-lg" />
-          <div className="h-24 bg-gray-100 rounded-lg" />
+          <LiveChat />
         </aside>
       </div>
       <CommentsContainer />

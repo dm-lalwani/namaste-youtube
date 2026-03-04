@@ -10,3 +10,5 @@ export const YT_SEARCH_RESULTS_API = (query) =>
   `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=25&q=${encodeURIComponent(
     query,
   )}&key=${GOOGLE_API_KEY}`;
+
+export const LIVE_CHAT_COUNT = 25;
