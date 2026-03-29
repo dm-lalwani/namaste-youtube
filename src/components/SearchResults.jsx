@@ -37,7 +37,7 @@ const SearchResults = () => {
   }
 
   return (
-    <div className="pt-20 px-4 flex flex-col gap-4 max-w-5xl">
+    <div className="px-4 flex flex-col gap-4 max-w-5xl">
       {loading && (
         <div className="text-sm text-gray-500">Loading results...</div>
       )}
